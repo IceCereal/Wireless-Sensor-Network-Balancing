@@ -48,10 +48,13 @@ def Fitness(child, load = None, gamma = None):
 	"""
 		Fitness Function
 		
-		Inputs:
+		params:
 			child (list):	Evaluate fitness on this child
 			load (list):	The Load on every Gateway: defaults to [30, 14, 20, 8]
 			gamma (int):	The constant: defaults to 0.25
+
+		returns:
+			fitness (int):	The fitnes of the child
 	"""
 
 	mean = 0	# Mean of the Loads
@@ -68,3 +71,4 @@ def Fitness(child, load = None, gamma = None):
 		load = [30, 14, 20, 8]
 	if gamma == None:
 		gamma = 0.25
+	
