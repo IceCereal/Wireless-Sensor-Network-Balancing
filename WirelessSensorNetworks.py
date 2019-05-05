@@ -20,7 +20,21 @@ sensors = [	[0, 1],
 		[0, 2, 3]
 	]
 
-print ("Sensors & their Gateways::")
+print ("Sensors & their Gateways:")
 
 for i in range(len(sensors)):
 	print (i, '\t', sensors[i])
+
+### CHECK:
+### Whether Sensors > Gateways
+
+maxGateway = 0
+
+for i in range(len(sensors)):
+	if max(sensors[i]) > maxGateway:
+		maxGateway = max(sensors[i])
+
+if maxGateway > len(sensors):
+	print ("There are more gateways than the number of sensors")
+	print ("Exit")
+	exit()
