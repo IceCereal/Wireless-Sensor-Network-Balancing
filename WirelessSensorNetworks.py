@@ -44,13 +44,13 @@ if maxGateway > len(sensors):
 
 popSize = 12	# Population Size
 
-def Fitness(child, load = None, gamma = None):
+def Fitness(child, Load = None, gamma = None):
 	"""
 		Fitness Function
 		
 		params:
 			child (list):	Evaluate fitness on this child
-			load (list):	The Load on every Gateway: defaults to [30, 14, 20, 8]
+			Load (list):	The Load on every Gateway: defaults to [30, 14, 20, 8]
 			gamma (int):	The constant: defaults to 0.25
 
 		returns:
@@ -67,8 +67,28 @@ def Fitness(child, load = None, gamma = None):
 
 	Fitness = 0	# Fitness Function = Exp_GLoad * Num_Granted_Gateways / Number_of_Gateways
 
-	if load == None:
-		load = [30, 14, 20, 8]
+	if Load == None:
+		Load = [30, 14, 20, 8]
 	if gamma == None:
 		gamma = 0.25
+
+	mean = sum(Load) / len(Load)
+
+	T_upper = mean + (gamma * mean)
+	T_lower = mean - (gamma * mean)
+
+	for i in Load:
+		Load_Ratio.append(i/max(Load))
+
+	Exp_GLoad = sum(Load_Ratio) / len(Load_Ratio)
 	
+	# Find number of T_lower < loads < T_upper
+	Granted_Gateways = 0
+	
+	for i in Load:
+		if (T_lower < i) and (i < T_upper):
+			Granted_Gateways += 1
+	
+	Fitness = Exp_GLoad * (Granted_Gateways / len(Load))
+	
+	return Fitness
