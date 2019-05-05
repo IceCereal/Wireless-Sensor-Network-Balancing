@@ -44,33 +44,37 @@ if maxGateway > len(sensors):
 
 popSize = 12	# Population Size
 
-def Fitness(child, Load = None, gamma = None):
+def Fitness(child, sentLoad = None, sentGamma = None):
 	"""
 		Fitness Function
 		
 		params:
 			child (list):	Evaluate fitness on this child
-			Load (list):	The Load on every Gateway: defaults to [30, 14, 20, 8]
-			gamma (int):	The constant: defaults to 0.25
+			sentLoad (list):	The Load on every Gateway: defaults to [30, 14, 20, 8]
+			sentGamma (int):	The constant: defaults to 0.25
 
 		returns:
 			fitness (int):	The fitnes of the child
 	"""
 
-	mean = 0	# Mean of the Loads
-	gamma = 0	# Gamma (a constant)
+	mean = 0.0	# Mean of the Loads
+	gamma = 0.0	# Gamma (a constant)
 	Load = []	# Loads on each Gateway. Can also be (num_bits * %_energy_in_gateway)
-	T_upper = 0	# Upper Threshold for granted number of gateways (mean + gamma*mean)
-	T_lower = 0	# Lower Threshold for granted number of gateways (mean - gamma*mean)
+	T_upper = 0.0	# Upper Threshold for granted number of gateways (mean + gamma*mean)
+	T_lower = 0.0	# Lower Threshold for granted number of gateways (mean - gamma*mean)
 	Load_Ratio = []	# Defined per each Gateway. Load_of_current_gateway / Highest_load
-	Exp_GLoad = 0 	# Expected Gateway Load = Sigma(Load_Ratio)/ Number_of_Gateways
+	Exp_GLoad = 0.0 	# Expected Gateway Load = Sigma(Load_Ratio)/ Number_of_Gateways
 
-	Fitness = 0	# Fitness Function = Exp_GLoad * Num_Granted_Gateways / Number_of_Gateways
+	Fitness = 0.0	# Fitness Function = Exp_GLoad * Num_Granted_Gateways / Number_of_Gateways
 
-	if Load == None:
-		Load = [30, 14, 20, 8]
-	if gamma == None:
-		gamma = 0.25
+	print (sentLoad)
+	if sentLoad == None:
+		sentLoad = [30, 14, 20, 8]
+	Load = sentLoad
+	
+	if sentGamma == None:
+		sentGamma = 0.25
+	gamma = sentGamma
 
 	mean = sum(Load) / len(Load)
 
